@@ -27,10 +27,10 @@ public class BTree{
         if (nodo.hijosC == 0) {
             return null;
         }
-        // recooremos recursivamente por el hijo izquierdo o derecho
+        // recorremos recursivamente por el hijo izquierdo o derecho
         // dependiendo donde haya quedado convenientemente
         // el indice i
-        return buscarNodo(nodo, k);
+        return buscarNodo(nodo.hijos[i], k);
         
     }
 }
