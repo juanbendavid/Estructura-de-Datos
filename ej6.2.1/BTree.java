@@ -1,5 +1,4 @@
 
-
 /******************************************************************************
  *  Compilation:  javac BTree.java
  *  Execution:    java BTree
@@ -17,7 +16,7 @@
 
 
 
-public class BTree<Key extends Comparable<Key>, Value>  {
+public class BTree<Key extends Comparable <Key>, Value>  {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
     private static final int M = 4;
@@ -30,7 +29,7 @@ public class BTree<Key extends Comparable<Key>, Value>  {
     private static final class Node {
         private int m;                             // number of children
         private Entry[] children = new Entry[M];   // the array of children
-
+        
         // create a node with k children
         private Node(int k) {
             m = k;
@@ -39,7 +38,11 @@ public class BTree<Key extends Comparable<Key>, Value>  {
 
     // internal nodes: only use key and next
     // external nodes: only use key and value
+    
     private static class Entry {
+        /**
+         *
+         */
         private Comparable key;
         private Object val;
         private Node next;     // helper field to iterate over array entries
@@ -47,7 +50,7 @@ public class BTree<Key extends Comparable<Key>, Value>  {
             this.key  = key;
             this.val  = val;
             this.next = next;
-        }
+        }   
     }
 
     /**
@@ -96,19 +99,22 @@ public class BTree<Key extends Comparable<Key>, Value>  {
         return search(root, key, height);
     }
 
+    @SuppressWarnings("unchecked")
     private Value search(Node x, Key key, int ht) {
         Entry[] children = x.children;
 
         // external node
         if (ht == 0) {
             for (int j = 0; j < x.m; j++) {
+                
                 if (eq(key, children[j].key)) return (Value) children[j].val;
             }
         }
 
-        // internal node
+        // internal node, need recursion
         else {
             for (int j = 0; j < x.m; j++) {
+                
                 if (j+1 == x.m || less(key, children[j+1].key))
                     return search(children[j].next, key, ht-1);
             }
@@ -174,7 +180,7 @@ public class BTree<Key extends Comparable<Key>, Value>  {
     }
 
     // split node in half
-    private Node split(Node h) {
+    private Node    split(Node h) {
         Node t = new Node(M/2);
         h.m = M/2;
         for (int j = 0; j < M/2; j++)
@@ -187,6 +193,7 @@ public class BTree<Key extends Comparable<Key>, Value>  {
      *
      * @return a string representation of this B-tree.
      */
+    @Override
     public String toString() {
         return toString(root, height, "") + "\n";
     }
@@ -209,12 +216,12 @@ public class BTree<Key extends Comparable<Key>, Value>  {
         return s.toString();
     }
 
-
+    @SuppressWarnings("unchecked")
     // comparison functions - make Comparable instead of Key to avoid casts
     private boolean less(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) < 0;
     }
-
+    @SuppressWarnings("unchecked")
     private boolean eq(Comparable k1, Comparable k2) {
         return k1.compareTo(k2) == 0;
     }
