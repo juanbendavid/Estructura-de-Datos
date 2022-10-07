@@ -141,9 +141,16 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
         if (u == null) return; // si no se superó el limite de hijos, retorna null
 
         // need to split root
-        Node t = new Node(2);   
+        Node t = new Node(2);  
+        System.out.println("enlazado");
+
+        root.nextLeaf = u; // hacemos que el nodo de la izquierda apunte al de la derecha 
         t.children[0] = new Entry(root.children[0].key, null, root);
         t.children[1] = new Entry(u.children[0].key, null, u);
+     
+
+        
+        
         root = t;
         height++;
     }
@@ -163,12 +170,16 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
         else {
             for (j = 0; j < h.m; j++) {
                 if ((j+1 == h.m) || less(key, h.children[j+1].key)) {
+                    System.out.println("interno");
                     Node u = insert(h.children[j++].next, key, val, ht-1);
-
+                    
                     if (u == null) return null; // si no se realizó el split
                     t.key = u.children[0].key;  
                     t.val = null;               // como es nodo interno, no almacenamos el dato, solo el key
                     t.next = u;
+                    
+                    System.out.println("enlazado");
+                    h.nextLeaf = u; // hacemos que el nodo de la izquierda apunte al de la derecha
                     break;
                 }
             }
@@ -193,9 +204,7 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
             t.children[j] = h.children[M/2+j]; // se cargaron los dos ultimos
 
 
-        if (ht==0)
-            System.out.println("enlazado");
-            h.nextLeaf = t; // hacemos que el nodo de la izquierda apunte al de la derecha
+       
 
         return t;
     }
@@ -211,6 +220,7 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
     }
 
     
+
     /*
      * Modificamos toString de manera que muestre los valores del B+Tree
      * recorriendo la lista enlazada de nodos hojas
@@ -221,21 +231,49 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
         Entry[] children = h.children;
 
         if (ht == 0) {
-            while(h!=null){
-                for (int j = 0; j < h.m; j++) {
-                    System.out.print(h.children[j].val + " ");
-                }
-                h=h.nextLeaf;
+            for (int j = 0; j < h.m; j++) {
+                s.append(indent + children[j].key + " " + children[j].val + "\n");
             }
-            
         }
         else {
             for (int j = 0; j < h.m; j++) {
-                s.append(toString(children[j].next, ht-1, indent + "     "));
+                //if (j > 0) s.append(indent + "(" + children[j].key + ")\n");
+                s.append(toString(children[j].next, ht-1, indent + "   --  "));
             }
         }
-        return "";
+        return s.toString();
     }
+
+
+    public void rangePrint(Comparable value1, Comparable value2){
+        if (less(value1, value2)) {
+            print(root, height, value1, value2);
+        } else {
+            System.out.println("Entradas invalidas");
+        }
+    }
+
+    private void print(Node h, int ht, Comparable value1, Comparable value2){
+        Entry[] children = h.children;
+        if (ht == 0) {
+            while(h!=null){
+                for (int j = 0; j < h.m; j++) {
+                    //if(less(h.children[j].key, value2) && less(value1, h.children[j].key))
+                    System.out.print(h.children[j].val + " ");
+                }
+                h=h.nextLeaf;
+                System.out.println("cambio");
+            }
+            return;
+            
+        }
+        else {
+            //for (int j = 0; j < h.m; j++) {
+                print(children[0].next, ht-1, value1, value2);
+            //}
+        }
+    }
+
 
     @SuppressWarnings("unchecked")
     // comparison functions - make Comparable instead of Key to avoid casts
@@ -262,13 +300,14 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
         st.put(40, 40);
         st.put(50, 50);
         st.put(60, 60);
-        st.put(70, 70);
-        st.put(15, 15);
+        //st.put(70, 70);
+        //st.put(15, 15);
 
         //System.out.println("size:    " + st.size());
         System.out.println("height:  " + st.height());
 
         System.out.println(st);
+        st.rangePrint(30, 50);
         System.out.println();
     }
 
