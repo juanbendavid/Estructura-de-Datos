@@ -210,22 +210,31 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
         return toString(root, height, "") + "\n";
     }
 
+    
+    /*
+     * Modificamos toString de manera que muestre los valores del B+Tree
+     * recorriendo la lista enlazada de nodos hojas
+    */
+
     private String toString(Node h, int ht, String indent) {
         StringBuilder s = new StringBuilder();
         Entry[] children = h.children;
 
         if (ht == 0) {
-            for (int j = 0; j < h.m; j++) {
-                s.append(indent + children[j].key + " " + children[j].val + "\n");
+            while(h!=null){
+                for (int j = 0; j < h.m; j++) {
+                    System.out.print(h.children[j].val + " ");
+                }
+                h=h.nextLeaf;
             }
+            
         }
         else {
             for (int j = 0; j < h.m; j++) {
-                if (j > 0) s.append(indent + "(" + children[j].key + ")\n");
                 s.append(toString(children[j].next, ht-1, indent + "     "));
             }
         }
-        return s.toString();
+        return "";
     }
 
     @SuppressWarnings("unchecked")
