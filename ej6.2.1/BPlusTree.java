@@ -16,7 +16,7 @@
 
 
 
-public class BTree<Key extends Comparable <Key>, Value>  {
+public class BPlusTree<Key extends Comparable <Key>, Value>  {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
     private static final int M = 4;
@@ -25,14 +25,7 @@ public class BTree<Key extends Comparable <Key>, Value>  {
     private int height;      // height of the B-tree
     private int n;           // number of key-value pairs in the B-tree
 
-    private static final class internalNode{
-        private int m;                              // number of keys
-        private Comparable[] keys = new Comparable[M];
-
-        private internalNode(int k) {
-            m = k;
-        }
-    }
+    
 
     // helper B-tree node data type
     private static final class Node { // like a leafNode
@@ -65,7 +58,7 @@ public class BTree<Key extends Comparable <Key>, Value>  {
     /**
      * Initializes an empty B-tree.
      */
-    public BTree() {
+    public BPlusTree() {
         root = new Node(0);
     }
 
@@ -112,7 +105,7 @@ public class BTree<Key extends Comparable <Key>, Value>  {
     private Value search(Node x, Key key, int ht) {
         Entry[] children = x.children;
 
-        // external node
+        // external node, cuasndo es un nodo hoja
         if (ht == 0) {
             for (int j = 0; j < x.m; j++) {
                 
@@ -156,7 +149,7 @@ public class BTree<Key extends Comparable <Key>, Value>  {
     }
 
     private Node insert(Node h, Key key, Value val, int ht) {
-        int j;
+        int j; // global en la funcion
         Entry t = new Entry(key, val, null);
 
         // external node                
@@ -183,21 +176,27 @@ public class BTree<Key extends Comparable <Key>, Value>  {
         // hacemos un corrimiento para insertar un numero menor a los que ya existen en el nodo h
         for (int i = h.m; i > j; i--)
             h.children[i] = h.children[i-1];    
-        h.children[j] = t;
+        h.children[j] = t; // el nuevo Entry se coloca en la posicion j
         h.m++; // aumenta el numero de keys
         // si no rompemos la regla, retorna null, en caso contrario, debemos dividir el nodo
 
         if (h.m < M) return null;
-        else         return split(h);
+        else         return split(h, ht);
     }
 
     // split node in half
-    private Node split(Node h) {
-        Node t = new Node(M/2);
+    private Node split(Node h, int ht) {
+        Node t = new Node(M/2); // nuevo nodo desde la media para arriba/derecha
         h.m = M/2;
         // despues de crear un nodo nuevo, cargamos la mitad para arriba de indice en él
         for (int j = 0; j < M/2; j++)
-            t.children[j] = h.children[M/2+j];
+            t.children[j] = h.children[M/2+j]; // se cargaron los dos ultimos
+
+
+        if (ht==0)
+            System.out.println("enlazado");
+            h.nextLeaf = t; // hacemos que el nodo de la izquierda apunte al de la derecha
+
         return t;
     }
 
@@ -246,17 +245,19 @@ public class BTree<Key extends Comparable <Key>, Value>  {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        BTree<String, String> st = new BTree<String, String>();
+        BPlusTree<Integer, Integer> st = new BPlusTree<>();
 
-        st.put("1", "a");
-        st.put("2", "b");
-        st.put("3", "c");
-        st.put("4", "d");
-        st.put("5", "e");
-        
+        st.put(10, 10);
+        st.put(20, 20);
+        st.put(30, 30);
+        st.put(40, 40);
+        st.put(50, 50);
+        st.put(60, 60);
+        st.put(70, 70);
+        st.put(15, 15);
 
         //System.out.println("size:    " + st.size());
-        //System.out.println("height:  " + st.height());
+        System.out.println("height:  " + st.height());
 
         System.out.println(st);
         System.out.println();
