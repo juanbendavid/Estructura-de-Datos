@@ -256,6 +256,12 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
+        int orden = Integer.parseInt(args[0]);
+        System.out.println(orden);
+        if(!(orden>2 && orden%2 == 0)){
+            throw new RuntimeException("Numero de orden inválido");
+        }
+
         BPlusTree2<Integer, Integer> st = new BPlusTree2<>(4);
         
         st.put(10, 10);
