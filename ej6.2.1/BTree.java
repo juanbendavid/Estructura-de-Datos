@@ -1,22 +1,15 @@
 
-/******************************************************************************
- *  Compilation:  javac BTree.java
- *  Execution:    java BTree
- *  Dependencies: StdOut.java
+/**
+ * G28
  *
- *  B-tree.
  *
- *  Limitations
- *  -----------
- *   -  Assumes M is even and M >= 4
- *   -  should b be an array of children or list (it would help with
- *      casting to make it a list)
- *
- ******************************************************************************/
+ * Carlos Ariel Vallejos Caballero 5670236 
+ * Juan Emanuel David Zaracho 5611898
+ */
 
 
 
-public class BPlusTree2<Key extends Comparable <Key>, Value>  {
+public class BTree<Key extends Comparable <Key>, Value>  {
     // max children per B-tree node = M-1
     // (must be even and greater than 2)
     private int M;
@@ -32,13 +25,10 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
         private int m;                             // number of children
         private Entry[] children;
 
-        private Node nextLeaf;                     // apuntador a la siguiente hoja para iterar
-
         // create a node with k children
         private Node(int k, int orden) {
             m = k;
             children = new Entry[orden];   // the array of children
-            nextLeaf = null;
         }
     }
 
@@ -62,7 +52,7 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
      * Initializes an empty B-tree.
      * @param M orden del arbol
      */
-    public BPlusTree2(int orden) {
+    public BTree(int orden) {
         root = new Node(0, orden);
         M = orden;         // inicializamos el orden del arbol
     }
@@ -157,6 +147,7 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
     }
 
     private Node insert(Node h, Key key, Value val, int ht) {
+        
         int j; // global en la funcion
         Entry t = new Entry(key, val, null);
 
@@ -256,13 +247,14 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
+        // se recibe el entero desde la linea de comando de argumentos
         int orden = Integer.parseInt(args[0]);
-        System.out.println(orden);
+        // validacion requerida
         if(!(orden>2 && orden%2 == 0)){
             throw new RuntimeException("Numero de orden inválido");
         }
 
-        BPlusTree2<Integer, Integer> st = new BPlusTree2<>(4);
+        BTree<Integer, Integer> st = new BTree<>(orden);
         
         st.put(10, 10);
         st.put(20, 20);
@@ -272,6 +264,10 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
         st.put(60, 60);
         st.put(70, 70);
         st.put(15, 15);
+        st.put(80, 80);
+        st.put(100, 100);
+        st.put(65, 65);
+        st.put(110, 110);
 
         System.out.println("size:    " + st.size());
         System.out.println("height:  " + st.height());
@@ -281,30 +277,5 @@ public class BPlusTree2<Key extends Comparable <Key>, Value>  {
     }
 
 }
-
-/******************************************************************************
- *  Copyright 2002-2022, Robert Sedgewick and Kevin Wayne.
- *
- *  This file is part of algs4.jar, which accompanies the textbook
- *
- *      Algorithms, 4th edition by Robert Sedgewick and Kevin Wayne,
- *      Addison-Wesley Professional, 2011, ISBN 0-321-57351-X.
- *      http://algs4.cs.princeton.edu
- *
- *
- *  algs4.jar is free software: you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation, either version 3 of the License, or
- *  (at your option) any later version.
- *
- *  algs4.jar is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  You should have received a copy of the GNU General Public License
- *  along with algs4.jar.  If not, see http://www.gnu.org/licenses.
- ******************************************************************************/
-
 
 
