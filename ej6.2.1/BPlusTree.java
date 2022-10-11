@@ -179,7 +179,7 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
                     t.next = u;
                     
                     System.out.println("enlazado");
-                    h.nextLeaf = u; // hacemos que el nodo de la izquierda apunte al de la derecha
+                    //h.nextLeaf = u; // hacemos que el nodo de la izquierda apunte al de la derecha
                     break;
                 }
             }
@@ -256,6 +256,8 @@ public class BPlusTree<Key extends Comparable <Key>, Value>  {
     private void print(Node h, int ht, Comparable value1, Comparable value2){
         Entry[] children = h.children;
         if (ht == 0) {
+            System.out.println("nodo hojaaa");
+
             while(h!=null){
                 for (int j = 0; j < h.m; j++) {
                     //if(less(h.children[j].key, value2) && less(value1, h.children[j].key))
