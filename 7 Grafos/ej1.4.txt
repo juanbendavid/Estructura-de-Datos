@@ -14,4 +14,35 @@ ENCONTRARREVERSO(G)
                 verticeA = listaAdyacencia[i].get(j)                    // almacenamos un vertice y lo enviamos para hallar su reversa
                 listaTranspuesta[verticeA].add(i)                       // se añade la reversa a la listaTranspuesta
 
-https://www.geeksforgeeks.org/transpose-graph/
+Complejidad: O(m+n)
+
+gfg
+
+Ejercicio 1.4.2 Escriba seudocodigo para un procedimiento que produzca la representacion con lista
+de adyacencia de G en donde los vecinos salientes de cada vertice se listan en orden
+creciente. El procedimiento debe ejecutarse en tiempo O(m+n).
+
+ORDENARLISTA(G)
+    for(int i = 0; i < m; i++)                                          // se recorre la lista de adyacencias
+            for(int j = 0; j < listaAdyacencia[i].size(); j++) 
+                m = listaAdyacencia[i].length         
+                radixsort(listaAdyacencia[i], m)  //DUDA
+
+Usamos la implementacion que ya tenemos de radixsort para ordenar la lista por cada vertice
+
+
+
+Ejercicio 1.4.3 Escriba seudocodigo para un procedimiento que verifique si G es no dirigido. Es decir
+para cada e ∈ E, el reverso de e tambien esta en E. El procedimiento debe correr en
+tiempo O(m + n).
+
+NODIRIGIDO(G)
+    for(int i = 0; i < m; i++)                                          // se recorre la lista de adyacencias
+            for(int j = 0; j < listaAdyacencia[i].size(); j++) 
+                m = listaAdyacencia[i].length         
+                key = listaAdyacencia[i].get(j)                         // dato  a buscar
+                if busquedaBinaria(listaAdyacencia[i], k, 0, m-1 ) == transpuesta
+                    return false                                        // El grafo es dirigido
+        return true                                                     // el grafo es no dirigido
+                
+                
