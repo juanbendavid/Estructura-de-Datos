@@ -1,0 +1,17 @@
+
+Ejercicio 1.4.1
+Escriba seudocodigo para un procedimiento que produzca una representacion de lista
+de adyacencia del grafo reverso (G con cada arista invertida). El procedimiento debe
+correr en tiempo O(m+n).
+
+Sea listaAdyacencia, un array de dimension m, con una lista enlazada en cada posicion
+y listaTranspuesta, un array de dimension m también, con una lista enlazada en cada posicion.
+Hareamos la transpuesta/reverso del Grafo G representado en listaAdyacencia en la lista listaTranspuesta
+
+ENCONTRARREVERSO(G)
+    for(int i = 0; i < m; i++)                                          // se recorre la lista de adyacencias
+            for(int j = 0; j < listaAdyacencia[i].size(); j++)          // se recorre cada nodo de la lista de adyacencia
+                verticeA = listaAdyacencia[i].get(j)                    // almacenamos un vertice y lo enviamos para hallar su reversa
+                listaTranspuesta[verticeA].add(i)                       // se añade la reversa a la listaTranspuesta
+
+https://www.geeksforgeeks.org/transpose-graph/
