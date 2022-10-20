@@ -1,3 +1,5 @@
+import java.util.List;
+
 public abstract class Graph {
     // metodo para insertar una arista
 
@@ -13,13 +15,13 @@ public abstract class Graph {
 
     public abstract void insertarArista(int i, int j, double p);
     
-    public abstract ListaConPI<Adyacente> adyacentesDe(int i);
+    public abstract List<Adyacente> adyacentesDe(int i);
 
     public String toString() {
         String res = "";
         for (int i = 1; i <= numVertices(); i++) {
             res += "Vértice: " + i;
-            ListaConPI<Adyacente> l = adyacentesDe(i);
+            List<Adyacente> l = adyacentesDe(i);
             res += (l.esVacia()) ? " sin Adyacentes " : " con Adyacentes: ";
             for (l.inicio(); !l.esFin(); l.siguiente())
                 res += l.recuperar() + " ";

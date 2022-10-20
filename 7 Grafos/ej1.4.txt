@@ -41,7 +41,7 @@ NODIRIGIDO(G)
             for(int j = 0; j < listaAdyacencia[i].size(); j++) 
                 m = listaAdyacencia[i].length         
                 key = listaAdyacencia[i].get(j)                         // dato  a buscar
-                if busquedaBinaria(listaAdyacencia[i], k, 0, m-1 ) == transpuesta
+                if busquedaBinaria(listaAdyacencia[i], key, 0, m-1 )
                     return false                                        // El grafo es dirigido
         return true                                                     // el grafo es no dirigido
                 

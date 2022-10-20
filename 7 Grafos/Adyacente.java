@@ -1,8 +1,8 @@
-class Adyacente {
+public class Adyacente {
     // La clase adyacente representa un vertice vecino
     int id;
     double peso;
-    Adyacente(int id, double peso){
+    public Adyacente(int id, double peso){
         this.id = id;
         this.peso = peso;
     }
