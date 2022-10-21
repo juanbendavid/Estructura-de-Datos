@@ -16,19 +16,32 @@ ENCONTRARREVERSO(G)
 
 Complejidad: O(m+n)
 
-gfg
+
+
 
 Ejercicio 1.4.2 Escriba seudocodigo para un procedimiento que produzca la representacion con lista
 de adyacencia de G en donde los vecinos salientes de cada vertice se listan en orden
 creciente. El procedimiento debe ejecutarse en tiempo O(m+n).
 
 ORDENARLISTA(G)
-    for(int i = 0; i < m; i++)                                          // se recorre la lista de adyacencias
-            for(int j = 0; j < listaAdyacencia[i].size(); j++) 
-                m = listaAdyacencia[i].length         
-                radixsort(listaAdyacencia[i], m)  //DUDA
+    listaAdyacencia = G.lista     // lista de adyacencia del grafo            
+    arrayAux[N]                   // una lista de adyacencia auxiliar     
+    // realizamos un proceso similar para hallar la transpuesta del grafo,                     
+    for(int i = 0; i < m; i++)                                          
+            for(int j = 0; j < listaAdyacencia[i].size(); j++)          
+                verticeA = listaAdyacencia[i].get(j)                    
+                arrayAux[verticeA].add(i)   
+    // volvemos a hallar la transpuesta, pero ahora del array auxiliar
+    for(int i = 0; i < m; i++)                                         
+            for(int j = 0; j < arrayAux[i].size(); j++)          
+                verticeA = arrayAux[i].get(j)                    
+                listaAdyacencia[verticeA].add(i)
+    
+    Al final la listaEnlazada original queda como estaba pero los nodos de la cada lista estan ordenados crecientemente
+    La Complejidad del algoritmo queda en O(m+n)                                           
 
-Usamos la implementacion que ya tenemos de radixsort para ordenar la lista por cada vertice
+
+             
 
 
 
